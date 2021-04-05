@@ -1,0 +1,200 @@
+<HTML>
+   <HEAD>
+   <TITLE>Application</TITLE>
+   <meta http-equiv="Content-Type" content="text/html; charset=windows-1251"
+   <HTA:APPLICATION
+        ID="oHTA"
+        APPLICATIONNAME="application"
+        BORDER="thin"
+        BORDERSTYLE="normal"
+        CAPTION="yes"
+        ICON=""
+        MAXIMIZEBUTTON="yes"
+        MINIMIZEBUTTON="yes"
+        SHOWINTASKBAR="no"
+        SINGLEINSTANCE="no"
+        SYSMENU="yes"
+        VERSION="1.0"
+        WINDOWSTATE="maximize" />
+     <style type="text/css">
+        #utf8text_input{
+             width: 400px;
+        }
+        #convertutf8toutf16{
+        }
+        #utf16text_result{}
+
+        #convertutf16toutf8{}
+        #utf16text_input{
+             width: 400px;
+        }
+        #utf8text_result{}
+    </style>
+
+   </HEAD>
+   <BODY SCROLL="no" style="background-color: orangered;">
+        <div style="width: inherit; height: 100px; background-color: orange;"></div>
+        <div>
+          <div style="width: 100%%; background-color: black; display: inline-block">
+          <input id="utf8text_input" type="text" placeholder="Введите текст в кодировке UTF-8" size="18" />
+          <button id="convertutf8toutf16" onclick="Button1Click()">Перевести в кодировку UTF-16</button>
+          </div>
+          <div style="width: 100%%; height: 50px; background-color: black; display: inline-block">
+               <label style="color: white;">Перекодированный текст: </label>
+               <label id="utf16text_result" style="color: white;"></label>
+          </div>
+        </div>
+          <br><br>
+         <div>
+          <div style="width: 100%%; background-color: black; display: inline-block">
+          <input id="utf16text_input" type="text" placeholder="Введите текст в кодировке UTF-16" size="18" />
+          <button id="convertutf16toutf8" onclick="Button2Click()">Перевести в кодировку UTF-8</button>
+          </div>
+
+          <div style="width: 100%%; height: 50px; background-color: black; display: inline-block">
+               <label style="color: white;">Перекодированный текст: </label>
+               <label id="utf8text_result" style="color: white;"></label>
+          </div>
+        </div>
+
+        <script language="javascript">
+
+          function toUtf8(utftext) {
+               var string = "";
+               var i = 0;
+               var c = c1 = c2 = 0;
+ 
+               while ( i < utftext.length ) {
+ 
+                    c = utftext.charCodeAt(i);
+ 
+                    if (c < 128) {
+                         string += String.fromCharCode(c);
+                         i++;
+                    }
+                    else if((c > 191) && (c < 224)) {
+                         c2 = utftext.charCodeAt(i+1);
+                         string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+                         i += 2;
+                    }
+                    else {
+                         c2 = utftext.charCodeAt(i+1);
+                         c3 = utftext.charCodeAt(i+2);
+                         string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+                         i += 3;
+                    }
+ 
+               }
+ 
+               return string;
+          }
+
+          function fromUtf8(string) {
+               string = string.replace(/\r\n/g,"\n");
+               var utftext = "";
+ 
+               for (var n = 0; n < string.length; n++) {
+ 
+               var c = string.charCodeAt(n);
+ 
+                    if (c < 128) {
+                         utftext += String.fromCharCode(c);
+                    }
+                    else if((c > 127) && (c < 2048)) {
+                         utftext += String.fromCharCode((c >> 6) | 192);
+                         utftext += String.fromCharCode((c & 63) | 128);
+                    }
+                    else {
+                         utftext += String.fromCharCode((c >> 12) | 224);
+                         utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+                         utftext += String.fromCharCode((c & 63) | 128);
+                    }
+ 
+               }
+ 
+               return utftext;
+          }
+
+          function convertUtf8ToUtf16LE(str) {
+               str = toUtf8(str);
+               return str;
+               /*var arr = "";
+               for (var i = 0; i < str.length; i++) {
+               arr = arr + str.charAt(i)
+               }
+               return arr*/
+
+               /*var out, i, len, c;
+               var char2, char3;
+
+               out = "";
+               len = str.length;
+               i = 0;
+               while(i < len) {
+               c = str.charCodeAt(i++);
+               switch(c >> 4)
+               { 
+               case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:
+               out += str.charAt(i-1);
+                    break;
+               case 12: case 13:
+               char2 = str.charCodeAt(i++);
+               out += String.fromCharCode(((c & 0x1F) << 6) | (char2 & 0x3F));
+               out += str.charAt(i-1);
+                    break;
+               case 14:
+
+               char2 = str.charCodeAt(i++);
+               char3 = str.charCodeAt(i++);
+               out += String.fromCharCode(((c & 0x0F) << 12) | ((char2 & 0x3F) << 6) | ((char3 & 0x3F) << 0));
+                    break;
+               }
+               }
+
+               var byteArray = new Array(out.length * 2);
+               for (var i = 0; i < out.length; i++) {
+               byteArray[i*2] = out.charCodeAt(i); 
+               byteArray[i*2+1] = out.charCodeAt(i) >> 8;
+               }
+
+               return String.fromCharCode.apply( String, byteArray );*/
+          }
+
+          function convertUtf16LEToUtf8( binaryStr ) {
+               decodeURIComponent("???????µ??".split("").map(function(ch) { return "%"+ch.charCodeAt(0).toString(16); }).join(""))
+               binaryStr = toUtf8(binaryStr);
+               return binaryStr;
+               /*var cp = [];
+               for( var i = 0; i < binaryStr.length; i+=2) {
+               cp.push( 
+                    binaryStr.charCodeAt(i) |
+                    ( binaryStr.charCodeAt(i+1) << 8 )
+                    );
+               }
+
+               return String.fromCharCode.apply( String, cp );*/
+          }
+
+
+          function Button1Click(){
+               utf16text_result.innerHTML = convertUtf8ToUtf16LE(utf8text_input.value);
+          }
+
+          function Button2Click(){
+               utf8text_result.innerHTML = convertUtf16LEToUtf8(utf16text_input.value);
+          }
+
+          /*const btnConvert816 = document.getElementById('convertutf16toutf8');
+          btnConvert816.addEventListener('click', function(e){
+               let text = document.getElementById('utf8text_input').value;
+               document.getElementById('utf16text_result').innerHTML = convertUtf8ToUtf16LE(text);
+          });
+
+          const btnConvert168 = document.getElementById('convertutf16toutf8');
+          btnConvert168.addEventListener('click', function(e){
+               let text = document.getElementById('utf16text_input').value;
+               document.getElementById('utf8text_result').innerHTML = convertUtf16LEToUtf8(text);
+          });*/
+        </script>
+   </BODY>
+</HTML>

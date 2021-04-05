@@ -1,0 +1,10 @@
+C:\Projects\ChangeEncoding\bin\Debug\ChangeEncoding.exe.config
+C:\Projects\ChangeEncoding\bin\Debug\ChangeEncoding.exe
+C:\Projects\ChangeEncoding\bin\Debug\ChangeEncoding.pdb
+C:\Projects\ChangeEncoding\obj\Debug\ChangeEncoding.csprojAssemblyReference.cache
+C:\Projects\ChangeEncoding\obj\Debug\ChangeEncoding.Form1.resources
+C:\Projects\ChangeEncoding\obj\Debug\ChangeEncoding.Properties.Resources.resources
+C:\Projects\ChangeEncoding\obj\Debug\ChangeEncoding.csproj.GenerateResource.cache
+C:\Projects\ChangeEncoding\obj\Debug\ChangeEncoding.csproj.CoreCompileInputs.cache
+C:\Projects\ChangeEncoding\obj\Debug\ChangeEncoding.exe
+C:\Projects\ChangeEncoding\obj\Debug\ChangeEncoding.pdb

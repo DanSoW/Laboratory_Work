@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ChangeEncoding</string>
+    <string-array name="coding">
+        <item>UTF-8</item>
+        <item>UTF-16LE</item>
+    </string-array>
+</resources>

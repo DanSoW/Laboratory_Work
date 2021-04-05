@@ -1,0 +1,196 @@
+<HTML>
+   <HEAD>
+   <TITLE>Application</TITLE>
+   <meta http-equiv="Content-Type" content="text/html; charset=windows-1251"
+   <HTA:APPLICATION
+        ID="oHTA"
+        APPLICATIONNAME="Application"
+        BORDER="thin"
+        BORDERSTYLE="normal"
+        CAPTION="yes"
+        ICON=""
+        MAXIMIZEBUTTON="yes"
+        MINIMIZEBUTTON="yes"
+        SHOWINTASKBAR="no"
+        SINGLEINSTANCE="no"
+        SYSMENU="yes"
+        VERSION="1.0"
+        WINDOWSTATE="maximize" />
+     <style type="text/css">
+        #utf8text_input{
+             width: 400px;
+        }
+        #convertutf8toutf16{
+        }
+        #utf16text_result{}
+
+        #convertutf16toutf8{}
+        #utf16text_input{
+             width: 400px;
+        }
+        #utf8text_result{}
+    </style>
+
+   </HEAD>
+   <BODY SCROLL="no" style="background-color: orangered;">
+        <div style="width: inherit; height: 100px; background-color: orange;"></div>
+        <div style="background-color: green;">
+          <div style="width: 100%%; color: black; display: inline-block">
+          <input style="margin-left: 30px; margin-right: 30px;" id="utf8text_input" type="text" placeholder="Введите текст в кодировке UTF-8" size="18" />
+          <button id="convertutf8toutf16" onclick="Button1Click()">Перевести в кодировку UTF-16</button>
+          </div>
+          <div style="margin-top: 20px; width: 100%%; height: 50px; color: black; display: inline-block">
+               <label style="margin-left: 30px; margin-right: 30px;" style="color: black;">Перекодированный текст (UTF-8 to UTF-16): </label>
+               <label id="utf16text_result" style="color: black; margin-left: 10px;"></label>
+          </div>
+        </div>
+          <br><br>
+         <div style="background-color: green;">
+          <div style="width: 100%%; display: inline-block">
+          <input style="margin-left: 30px; margin-right: 30px;" id="utf16text_input" type="text" placeholder="Введите текст в кодировке UTF-16" size="18" />
+          <button id="convertutf16toutf8" onclick="Button2Click()">Перевести в кодировку UTF-8</button>
+          </div>
+
+          <div style="margin-top: 20px; width: 100%%; height: 50px; color: black; display: inline-block">
+               <label style="margin-left: 30px; margin-right: 30px;" style="color: black;">Перекодированный текст (UTF-16 to UTF-8): </label>
+               <label id="utf8text_result" style="color: black; margin-left: 10px;"></label>
+          </div>
+        </div>
+
+        <div style="width: inherit; height: 500px; background-color: orange;"></div>
+
+        <script language="javascript">
+
+          //Перевод из Utf-8 в windows-1251
+          function fromUtf8(utftext) {
+               var string = "";
+               var i = 0;
+               var c = c1 = c2 = 0;
+ 
+               while ( i < utftext.length ) {
+ 
+                    c = utftext.charCodeAt(i);
+ 
+                    if (c < 128) {
+                         string += String.fromCharCode(c);
+                         i++;
+                    }
+                    else if((c > 191) && (c < 224)) {
+                         c2 = utftext.charCodeAt(i+1);
+                         string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+                         i += 2;
+                    }
+                    else {
+                         c2 = utftext.charCodeAt(i+1);
+                         c3 = utftext.charCodeAt(i+2);
+                         string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+                         i += 3;
+                    }
+ 
+               }
+ 
+               return string;
+          }
+
+          //Перевод текста из windows-1251 в Utf-8
+          function toUtf8(string) {
+               string = string.replace(/\r\n/g,"\n");
+               var utftext = "";
+ 
+               for (var n = 0; n < string.length; n++) {
+ 
+               var c = string.charCodeAt(n);
+ 
+                    if (c < 128) {
+                         utftext += String.fromCharCode(c);
+                    }
+                    else if((c > 127) && (c < 2048)) {
+                         utftext += String.fromCharCode((c >> 6) | 192);
+                         utftext += String.fromCharCode((c & 63) | 128);
+                    }
+                    else {
+                         utftext += String.fromCharCode((c >> 12) | 224);
+                         utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+                         utftext += String.fromCharCode((c & 63) | 128);
+                    }
+ 
+               }
+ 
+               return utftext;
+          }
+
+          //Перевод из Utf-8 в Utf-16
+          function Utf8To16(input) {
+                var _escape = function(s) {
+                    function q(c) {
+                        c = c.charCodeAt();
+                        return '%' + (c<16 ? '0' : '') + c.toString(16).toUpperCase();
+                    }
+                    return s.replace(/[\x00-),:-?[-^`{-\xFF]/g, q);
+                };
+                try{
+                    return decodeURIComponent(_escape(input));
+                }catch (URIError) {
+                    return input;
+                }
+          }
+
+          //Перевод из Utf-16 в Utf-8
+          function Utf16To8(input) {
+                var _unescape = function(s) {
+                    function d(x, n) {
+                        return String.fromCharCode(parseInt(n, 16));
+                    }
+                    return s.replace(/%([0-9A-F]{2})/ig, d);
+                };
+                try{
+                    return _unescape(encodeURIComponent(input));
+                }catch (URIError) {
+                    return input;
+                }
+          }
+
+          function convertUtf8ToUtf16LE(str) {
+               return Utf8To16(toUtf8(str));
+          }
+
+          function convertUtf16LEToUtf8(str) {
+               return Utf16To8(toUtf8(str));
+          }
+
+          //перекодировка Windows-1251 в Utf16
+          function Win1251ToUtf16(str){
+               if (str == null){ return null;}
+               var result = "";
+               var o_code = "";
+               var i_code = "";
+               for (var I=0; I < str.length; I++){
+               i_code = str.charCodeAt(I);
+
+               if (i_code == 184){
+                    o_code = 1105;
+               } else if (i_code == 168){
+                    o_code = 1025;
+               } else if (i_code > 191 && i_code < 256){
+                    o_code = i_code + 848;
+               } else {
+                    o_code = i_code;
+               }
+               result = result + String.fromCharCode(o_code);
+               }                                                
+      
+               return result;
+          }
+
+
+          function Button1Click(){
+               utf16text_result.innerHTML = Utf8To16(toUtf8(utf8text_input.value));
+          }
+
+          function Button2Click(){
+               utf8text_result.innerHTML = fromUtf8(Utf16To8(Utf8To16(toUtf8(utf16text_input.value))));
+          }
+
+        </script>
+   </BODY>
+</HTML>

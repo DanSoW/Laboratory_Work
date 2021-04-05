@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="306dp"
+        android:background="@color/cardview_shadow_start_color"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#009955"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="82dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20px"
+                    android:gravity="center_horizontal"
+                    android:text="Текст UTF-8"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="30px"></TextView>
+
+                <EditText
+                    android:id="@+id/inputUtf8"
+                    android:layout_width="152dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="30px"></EditText>
+
+                <Button
+                    android:id="@+id/convertToUtf16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    android:gravity="center_horizontal"
+                    android:text="UTF-16"
+                    android:textAlignment="center"
+                    android:textSize="30px"></Button>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="400px"
+                    android:layout_height="match_parent"
+                    android:paddingTop="20px"
+                    android:gravity="center_horizontal"
+                    android:text="Текст в кодировке UTF-16:"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="30px"></TextView>
+
+                <EditText
+                    android:id="@+id/resultConvertUtf816"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="30px"></EditText>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="#565656"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="125px"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="82dp"
+                    android:layout_height="match_parent"
+                    android:paddingTop="20px"
+                    android:gravity="center_horizontal"
+                    android:text="Текст UTF-16"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="30px"></TextView>
+
+                <EditText
+                    android:id="@+id/inputUtf16"
+                    android:layout_width="156dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="30px"></EditText>
+
+                <Button
+                    android:id="@+id/convertToUtf8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="37dp"
+                    android:gravity="center_horizontal"
+                    android:text="UTF-8"
+                    android:textAlignment="center"
+                    android:textSize="30px"></Button>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="400px"
+                    android:layout_height="match_parent"
+                    android:paddingTop="20px"
+                    android:gravity="center_horizontal"
+                    android:text="Текст в кодировке UTF-8:"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="30px"></TextView>
+
+                <EditText
+                    android:id="@+id/resultConvertUtf168"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="30px"></EditText>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="58dp">
+
+                <Button
+                    android:id="@+id/chooseFile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="Выбор файла"
+                    android:textAlignment="center"
+                    android:textSize="30px"></Button>
+
+                <Spinner
+                    android:id="@+id/spinner1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/coding"
+                    android:gravity="center_horizontal"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="58dp">
+
+                <Button
+                    android:id="@+id/coding"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="Перекодировать"
+                    android:textAlignment="center"
+                    android:textSize="30px"></Button>
+
+                <Spinner
+                    android:id="@+id/spinner2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/coding"
+                    android:gravity="center_horizontal"
+                    android:textAlignment="center" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
